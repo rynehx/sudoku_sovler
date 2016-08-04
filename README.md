@@ -1,28 +1,14 @@
-// var testGrid = [
-// [5, 3, 0, 0, 7, 0, 0, 0, 0],
-// [6, 0, 0, 1, 9, 5, 0, 0, 0],
-// [0, 9, 8, 0, 0, 0, 0, 6, 0],
-// [8, 0, 0, 0, 6, 0, 0, 0, 3],
-// [4, 0, 0, 8, 0, 3, 0, 0, 1],
-// [7, 0, 0, 0, 2, 0, 0, 0, 6],
-// [0, 6, 0, 0, 0, 0, 2, 8, 0],
-// [0, 0, 0, 4, 1, 9, 0, 0, 5],
-// [0, 0, 0, 0, 8, 0, 0, 7, 9]
-// ];
+#Sudoku Solver
 
-var testGrid = [
-[5, 3, 0, 0, 7, 0, 0, 0, 0],
-[6, 0, 0, 1, 9, 5, 0, 0, 0],
-[0, 9, 8, 0, 0, 0, 0, 6, 0],
-[8, 0, 0, 0, 6, 0, 0, 0, 3],
-[4, 0, 0, 8, 0, 3, 0, 0, 1],
-[7, 0, 0, 0, 2, 0, 0, 0, 6],
-[0, 6, 0, 0, 0, 0, 2, 8, 0],
-[0, 0, 0, 4, 1, 9, 0, 0, 5],
-[0, 0, 0, 0, 8, 0, 0, 7, 9]
-];
+This is a simple app used to find a solution to an user inputted sudoku puzzle.
 
+##algorithm
 
+The algorithm first check if the initial board has any duplicate violations. If the board is absent with violations then the empty tiles are put into an array (`unseen`).
+
+The algorithm takes one empty tile from the `unseen` at a time and tries to iterate through 1-9 and check if each is a valid input onto the board and the tile is put onto the `seen` array. If such tile is valid then it is placed, else the tile is put back into the unseen and the next iteration with increment the tile. If the tile tried 1-9 then it is invalid to advance there the it is put back into the `unseen` and the previous tile is now tried. If the algorithm goes back to the beginning then the board is unsolvable because all previous tries are all invalid.
+
+```javascript
 var solver = function(grid){
 
   var seen = []; // create arrays to keep track of elements that are inputted or empty
@@ -83,37 +69,13 @@ var solver = function(grid){
   return grid;
 };
 
+```
 
+##check for input
+The sections below detail the code to check if a entry is valid based on previous entries on the board. The general check for valid row/column/sub-box placement.
 
-var validCheck = function(grid){
-  var seen = [];
-
-  grid.forEach(function(row, i){
-    row.forEach(function(el, j){
-      if(el > 0){
-        seen.push({
-          pos:[i, j],
-          try: el
-        });
-      }
-    });
-  });
-
-
-  var check = true;
-  seen.forEach(function(el){
-    if(checkRow(el.try, el.pos[0], grid) > 1 ||
-       checkCol(el.try, el.pos[1], grid) > 1 ||
-       checkBox(el.try, el.pos[0], el.pos[1], grid) > 1 ){
-         check = false;
-    }
-
-  });
-
-  return check;
-};
-
-var checkPlace = function(input, pos, grid){
+```javascript
+var checkPlace = function(input, pos, grid){ // checks if row, column and sub box are valid
   if(!checkRow(input, pos[0], grid) &&
      !checkCol(input, pos[1], grid) &&
      !checkBox(input, pos[0], pos[1], grid)){
@@ -123,7 +85,13 @@ var checkPlace = function(input, pos, grid){
   }
   return false;
 };
+```
 
+###row
+
+the code below checks if the input is valid by checking if there is a duplicate value in the row.
+
+```javascript
 var checkRow = function(input ,row, grid){
   var res = 0;
   grid[row].forEach(function(el){
@@ -136,7 +104,14 @@ var checkRow = function(input ,row, grid){
 
   return res;
 };
+```
 
+
+###column
+
+the code below checks if the input is valid by checking if there is a duplicate value in the column.
+
+```javascript
 var checkCol = function(input, col, grid){
   var res = 0;
   for(var i = 0; i < 9; i++){
@@ -145,9 +120,14 @@ var checkCol = function(input, col, grid){
   }
   return res;
 };
+```
 
+###sub-box
+the code below checks if the input is valid by checking if there is a duplicate value in the sub-box.
 
+```javascript
 var checkBox = function(input, row, col, grid){
+
   var x = Math.floor(row/3)*3;
   var y = Math.floor(col/3)*3;
   var res = 0;
@@ -161,5 +141,4 @@ var checkBox = function(input, row, col, grid){
   }
   return res;
 };
-
-// solver(testGrid);
+```

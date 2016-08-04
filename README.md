@@ -1,5 +1,7 @@
 #Sudoku Solver
 
+[live][sudoku]
+[sudoku]: https://rynehx.github.io/sudoku_sovler/
 This is a simple app used to find a solution to an user inputted sudoku puzzle.
 
 ##algorithm

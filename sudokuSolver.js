@@ -29,7 +29,7 @@ var solver = function(grid){
   var unseen = [];
 
   if(!validCheck(grid)){
-    console.log('invalid input');
+    alert("invalid input");
     return;
   }
 
@@ -70,14 +70,15 @@ var solver = function(grid){
       if(prev){ //if the seen is empty it denotes that the algorithm cannot find a solution
         unseen.unshift(prev);
       }else{
+        alert("unsolvable puzzle");
         return false;
       }
     }
   }
 
-  grid.forEach(function(row){
-    console.log(row);
-  });
+  // grid.forEach(function(row){
+  //   console.log(row);
+  // });
 
   return grid;
 };
@@ -161,4 +162,4 @@ var checkBox = function(input, row, col, grid){
   return res;
 };
 
-solver(testGrid);
+// solver(testGrid);

@@ -56,12 +56,11 @@ body{
   background: linear-gradient(white, silver);
   border: 2px solid;
   border-color: darkblue;
-  margin: 2px;
+  margin: 3px;
   text-align: center;
   font-size: 18px;
   color: darkblue;
   font-weight: 600;
-
 }
 
 .button-container{
@@ -80,4 +79,11 @@ body{
   cursor: pointer;
   outline: none;
   font-size: 18px;
+}
+
+.box-frame{
+  background-color: blue;
+  position: absolute;
+  width: 122px;
+  height: 122px;
 }
